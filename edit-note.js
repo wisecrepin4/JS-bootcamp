@@ -7,20 +7,26 @@ if (Note) {
   document.querySelector("#notetitle").value = Note.title;
   document.querySelector("#notedetail").value = Note.details;
 
-  document.querySelector("#lastEdited").textContent = `last updated:${moment(
+  document.querySelector("#lastEdited").textContent = generateLastEdited(
     Note.updatedAt
-  ).fromNow()}`;
+  );
 }
 
 document.querySelector("#notetitle").addEventListener("input", (e) => {
   Note.title = e.target.value;
-  Note.UpdatedAt = moment();
+  Note.updatedAt = moment().valueOf();
+  document.querySelector("#lastEdited").textContent = generateLastEdited(
+    Note.updatedAt
+  );
   saveNotes();
 });
 
 document.querySelector("#notedetail").addEventListener("input", (e) => {
   Note.details = e.target.value;
-  Note.updatedAt = moment();
+  Note.updatedAt = moment().valueOf();
+  document.querySelector("#lastEdited").textContent = generateLastEdited(
+    Note.updatedAt
+  );
 
   saveNotes();
 });
