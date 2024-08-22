@@ -1,12 +1,17 @@
 notes = retrieve();
 let filters = {
   search: "",
+  sortBy: document.querySelector("#sortoption").value,
 };
 
+document.querySelector("#sortoption").addEventListener("change", (e) => {
+  filters.sortBy = e.target.value;
+  rendernotes(notes, filters);
+});
 rendernotes(notes, filters);
 document.querySelector("#createNt").addEventListener("click", () => {
   let id = uuidv4();
-  let timestamp = moment();
+  const timestamp = moment().valueOf();
   notes.push({
     id: id,
     title: "unnamed note",

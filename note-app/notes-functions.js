@@ -22,13 +22,48 @@ let removenote = (id) => {
   }
 };
 //rendering the Notes
+//first sorting the given variables
+const sorting = (notes, sortby) => {
+  if (sortby == "option1") {
+    notes = notes.sort((a, b) => {
+      // console.log(a.updatedAt, b.updatedAt);
+      if (a.updatedAt > b.updatedAt) {
+        return -1;
+      } else if (a.updatedAt < b.updatedAt) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return notes;
+  } else if (sortby == "option2") {
+    notes = notes.sort((a, b) => {
+      if (a.createdAt > b.createdAt) {
+        return -1;
+      } else if (a.createdAt < b.createdAt) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return notes;
+  } else if (sortby == "option3") {
+    return notes.sort((a, b) => {
+      if (a.title.toLowerCase() < b.title.toLowerCase()) {
+        return -1;
+      } else if (a.title.toLowerCase() > b.title.toLowerCase()) {
+        return 1;
+      } else return 0;
+    });
+  }
+};
 
 const rendernotes = (notes, filters) => {
   document.querySelector("#notesDom").textContent = "";
-
-  let filtered = notes.filter((note) => {
-    return note.title.toLowerCase().includes(filters.search.toLowerCase());
-  });
+  notes = sorting(notes, filters.sortBy);
+  let filtered = notes.filter((note) =>
+    note.title.toLowerCase().includes(filters.search.toLowerCase())
+  );
   filtered.forEach((filt) => {
     let noteHolder = document.createElement("div");
 
@@ -51,3 +86,8 @@ const rendernotes = (notes, filters) => {
     document.querySelector("#notesDom").appendChild(noteHolder);
   });
 };
+
+//Generate the last edited message
+
+const generateLastEdited = (NoteupdatedAt) =>
+  `last updated:${moment(NoteupdatedAt).fromNow()}`;
