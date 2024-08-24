@@ -1,7 +1,7 @@
 //fetch existinig todos from localstorage
 let todos = [];
 function retrieve(todos) {
-  if (localStorage.getItem("todos") !== null) {
+  if (localStorage.getItem("todos")) {
     todos = JSON.parse(localStorage.getItem("todos"));
   }
   return todos;
@@ -77,12 +77,16 @@ let rendertodos = function (todos, filters) {
       .toLowerCase()
       .includes(filters.search.toLowerCase());
 
-    let checkmatch = !todo.completed || filters.checkbox;
+    let checkoutput = !todo.completed || filters.checkbox;
 
-    return valuematch && checkmatch;
+    return valuematch && checkoutput;
   });
   filtered.forEach((filt) => {
     generateToDom(filt);
   });
-  generateSummaryDom(filtered);
+  generateSummaryDom(
+    filtered.filter((filt) => {
+      return filt.completed == false;
+    })
+  );
 };
