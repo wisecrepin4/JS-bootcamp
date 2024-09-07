@@ -2,6 +2,8 @@
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "notebook.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "liveServer.settings.useWebExt": true,
-  "liveServer.settings.CustomBrowser": "chrome"
+  "liveServer.settings.useWebExt": "",
+  "liveServer.settings.CustomBrowser": "chrome",
+  "liveServer.settings.useLocalIp": false,
+  "liveServer.settings.fullReload": true
 }

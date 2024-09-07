@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Task Manager</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+      #task-form {
+        display: flex;
+        margin-bottom: 20px;
+      }
+      #task-input {
+        flex-grow: 1;
+        padding: 10px;
+        font-size: 16px;
+      }
+      button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #task-list {
+        list-style-type: none;
+        padding: 0;
+      }
+      .task-item {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .task-item input[type="checkbox"] {
+        margin-right: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Simple Task Manager</h1>
+    <form id="task-form">
+      <input
+        type="text"
+        id="task-input"
+        placeholder="Enter a new task"
+        required
+      />
+      <button type="submit">Add Task</button>
+    </form>
+    <ul id="task-list"></ul>
+    <button id="clear-completed">Clear Completed Tasks</button>
+
+    <script>
+      const taskForm = document.getElementById("task-form");
+      const taskInput = document.getElementById("task-input");
+      const taskList = document.getElementById("task-list");
+      const clearCompletedButton = document.getElementById("clear-completed");
+
+      taskForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        addTask(taskInput.value);
+        taskInput.value = "";
+      });
+
+      clearCompletedButton.addEventListener("click", clearCompletedTasks);
+
+      function addTask(taskText) {
+        const li = document.createElement("li");
+        li.className = "task-item";
+        li.innerHTML = `
+                <input type="checkbox">
+                <span>${taskText}</span>
+            `;
+        taskList.appendChild(li);
+      }
+
+      function clearCompletedTasks() {
+        const completedTasks = taskList.querySelectorAll(
+          'input[type="checkbox"]:checked'
+        );
+        completedTasks.forEach((task) => task.parentElement.remove());
+      }
+    </script>
+  </body>
+</html>

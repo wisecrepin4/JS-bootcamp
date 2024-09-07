@@ -1,12 +1,16 @@
+"use strict";
 //fetch existinig todos from localstorage
 let todos = [];
 function retrieve(todos) {
-  if (localStorage.getItem("todos")) {
-    todos = JSON.parse(localStorage.getItem("todos"));
+  try {
+    if (localStorage.getItem("todos")) {
+      todos = JSON.parse(localStorage.getItem("todos"));
+    }
+    return todos;
+  } catch (e) {
+    return [];
   }
-  return todos;
 }
-
 //save todos to localstorage
 
 let savetodos = () => {
@@ -20,6 +24,7 @@ let removetodo = (id) => {
   if (index != -1) {
     todos.splice(index, 1);
   }
+  savetodos();
 };
 let changeCheckStatus = (id, e) => {
   let index = todos.findIndex((todo) => {
