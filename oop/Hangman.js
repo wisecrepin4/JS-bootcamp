@@ -1,37 +1,60 @@
-const Hangman = function (word, guesses) {
-  this.word = word;
-  this.guesses = guesses;
-  this.guessed = guessed;
+const Hangman = function (word, remainingGuesses) {
+  this.word = word.toLowerCase();
+  this.remainingGuesses = remainingGuesses;
+  this.guessedLetters = [];
+};
+Hangman.prototype.makeGuess = (guess) => {
+  if (typeof guess !== "string") {
+    console.log(`${guess}`);
+  } else if (this.guessedLetters.includes(guess)) {
+    console.log("already inputed input");
+  } else {
+    this.guessedLetters.add(guess);
+    this.remainingGuesses = remainingGuesses - 1;
+  }
 };
 
-Hangman.prototype. mklcarr= function(){
-  return ((this.word).tolowerCase()).split('');
-  
-}
-Hangman.prototype.puzzle = function (gue){
-  let foundarr = '';
-  this.mklcarr();
-  let wordarr = this.mklcarr();
-  
-    let found = wordarr.find(() => {
-      return wordarr == gue.toLowerCase();
-    })
-  foundarr += found;
-  if (foundarr!=='' ){
-    
-    wordarr.forEach(arr){
-      console.log (`Guessed ${foundarr.split('')} ?-> ${gue.toLowerCase()==arr?arr:'*'}`)
-    }
+Hangman.prototype.getPuzzle = function () {
+  let msg = "";
+  let wordGame = this.word;
+  if (!this.guessedLetters) {
+    msg = "No guesses? ==> ";
+    wordGame.split("").forEach((letter) => {
+      if (letter == " " || letter == "   " || letter == "    ") {
+        msg = msg + letter;
+      } else {
+        msg = msg + "*";
+      }
+    });
+  } else {
+    msg = "Guessed";
+    this.guessedLetters.forEach((letter) => {
+      msg = msg + `"${letter}"`;
+    });
+    msg = msg + "? -> ";
+    wordGame.split("").forEach((letter) => {
+      if (this.guessedLetters.includes(letter)) {
+        msg = msg + `${letter}`;
+      } else if (letter == " " || letter == "   " || letter == "    ") {
+        msg = msg + letter;
+      } else {
+        msg = msg + "*";
+      }
+    });
   }
-  else {
-    
-    console.log(`No guesses? --> ${wordarr.forEach(() => { console.log('*') });} `);
-   }
-  }
+  return msg;
+};
+const game1 = new Hangman("cat", 2);
+console.log(game1.getPuzzle());
 
-let game1 = new Hangman("Visualisation", 12,"");
-let game2 = new Hangman("Insurbodination", 12,'');
+const game2 = new Hangman("New Jersey", 4);
+console.log(game2.getPuzzle());
 
-console.log(`game 1 has ${game1.word} and ${game1.guesses}guesses`);
-console.log(`game 2 has ${game2.word} and ${game2.guesses} guesses`);
-console.log(game1);
+document.querySelector("#guess").addEventListener("submit", (e) => {
+  e.preventDefault();
+  let guess = document.getElementById("in").value;
+
+  console.log(guess);
+  game1.makeGuess(guess);
+  game2.makeGuess(guess);
+});
