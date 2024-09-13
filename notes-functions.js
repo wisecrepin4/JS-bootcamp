@@ -74,6 +74,7 @@ const rendernotes = (notes, filters) => {
     deletebtn.addEventListener("click", () => {
       removenote(filt.id);
       saveNotes();
+      rendernotes(notes, filters);
     });
 
     let found = document.createElement("a");
