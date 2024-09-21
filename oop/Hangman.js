@@ -1,60 +1,98 @@
-const Hangman = function (word, remainingGuesses) {
-  this.word = word.toLowerCase();
-  this.remainingGuesses = remainingGuesses;
-  this.guessedLetters = [];
-};
-Hangman.prototype.makeGuess = (guess) => {
-  if (typeof guess !== "string") {
-    console.log(`${guess}`);
-  } else if (this.guessedLetters.includes(guess)) {
-    console.log("already inputed input");
-  } else {
-    this.guessedLetters.add(guess);
-    this.remainingGuesses = remainingGuesses - 1;
+class Hangman {
+  constructor(word, remainingGuesses) {
+    this.word = word.toLowerCase();
+    this.remainingGuesses = remainingGuesses;
+    this.guessedLetters = [];
+    this.status = "playing";
   }
-};
 
-Hangman.prototype.getPuzzle = function () {
-  let msg = "";
-  let wordGame = this.word;
-  if (!this.guessedLetters) {
-    msg = "No guesses? ==> ";
-    wordGame.split("").forEach((letter) => {
-      if (letter == " " || letter == "   " || letter == "    ") {
-        msg = msg + letter;
-      } else {
-        msg = msg + "*";
-      }
-    });
-  } else {
-    msg = "Guessed";
-    this.guessedLetters.forEach((letter) => {
-      msg = msg + `"${letter}"`;
-    });
-    msg = msg + "? -> ";
-    wordGame.split("").forEach((letter) => {
-      if (this.guessedLetters.includes(letter)) {
-        msg = msg + `${letter}`;
-      } else if (letter == " " || letter == "   " || letter == "    ") {
-        msg = msg + letter;
-      } else {
-        msg = msg + "*";
-      }
-    });
+  showRemaining() {
+    return this.remainingGuesses;
   }
-  return msg;
-};
-const game1 = new Hangman("cat", 2);
-console.log(game1.getPuzzle());
 
-const game2 = new Hangman("New Jersey", 4);
-console.log(game2.getPuzzle());
+  makeGuess(guess) {
+    if (typeof guess !== "string") {
+      console.log(`${typeof guess}`);
+    } else if (this.guessedLetters.includes(guess)) {
+      console.log("already inputed input");
+    } else {
+      this.guessedLetters.push(guess);
+    }
+    if (!this.word.split("").includes(guess)) {
+      this.remainingGuesses--;
+    }
 
-document.querySelector("#guess").addEventListener("submit", (e) => {
-  e.preventDefault();
-  let guess = document.getElementById("in").value;
+    this.statusRenew();
+    console.log(this.status);
+  }
 
-  console.log(guess);
-  game1.makeGuess(guess);
-  game2.makeGuess(guess);
+  get Puzzle() {
+    let msg = "";
+    let wordGame = this.word;
+    if (!this.guessedLetters) {
+      msg = "No guesses? ==> ";
+      wordGame.split("").forEach((letter) => {
+        if (letter == " " || letter == "   " || letter == "    ") {
+          msg = msg + letter;
+        } else {
+          msg = msg + "*";
+        }
+      });
+    } else {
+      msg = "Guessed";
+      this.guessedLetters.forEach((letter) => {
+        msg = msg + `"${letter}"`;
+      });
+      msg = msg + "? -> ";
+      wordGame.split("").forEach((letter) => {
+        if (this.guessedLetters.includes(letter)) {
+          msg = msg + `${letter}`;
+        } else if (letter == " " || letter == "   " || letter == "    ") {
+          msg = msg + letter;
+        } else {
+          msg = msg + "*";
+        }
+      });
+    }
+    return msg;
+  }
+
+  statusRenew() {
+    let allGuessed = this.word
+      .split("")
+      .every((letter) => this.guessedLetters.includes(letter) || letter == " ");
+
+    if (allGuessed == true) {
+      this.status = "finished";
+    } else if (allGuessed == false && this.remainingGuesses > 0) {
+      this.status = "playing";
+    } else {
+      this.status = "failed";
+    }
+  }
+
+  get StatusMessage() {
+    if (this.status == "playing") {
+      return `${this.status} --> Guesses left: ${this.remainingGuesses}`;
+    } else if (this.status == "failed") {
+      return `${this.status} -->Nice try ! the word was "${this.word}"`;
+    } else {
+      return "Great work! You guessed the word.";
+    }
+  }
+}
+
+const request = new XMLHttpRequest();
+request.open("GET", "http://restcountries.eu");
+
+request.addEventListener("readystatechange", (e) => {
+  if (e.target.readyState == 4 && e.target.status == 200) {
+    const countryArray = JSON.parse(e.target.responseText);
+    let foundCountry = countryArray.find(
+      (country) => country.alpha2Code == "RW"
+    );
+    console.log(foundCountry.name);
+  }
 });
+
+request.send();
