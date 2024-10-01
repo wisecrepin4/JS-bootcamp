@@ -82,17 +82,10 @@ class Hangman {
   }
 }
 
-const request = new XMLHttpRequest();
-request.open("GET", "http://restcountries.eu");
+const displayCountry = (country) => {
+  console.log(country);
+};
 
-request.addEventListener("readystatechange", (e) => {
-  if (e.target.readyState == 4 && e.target.status == 200) {
-    const countryArray = JSON.parse(e.target.responseText);
-    let foundCountry = countryArray.find(
-      (country) => country.alpha2Code == "RW"
-    );
-    console.log(foundCountry.name);
-  }
-});
+getCountry("RW", displayCountry);
 
-request.send();
+getPuzzle();
