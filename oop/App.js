@@ -42,3 +42,21 @@ window.addEventListener("keypress", (e) => {
   //console.log(game2.getPuzzle());
   */
 });
+
+getCountry("RW").then(
+  (data) => {
+    console.log(data);
+  },
+  () => {
+    console.log(data);
+  }
+);
+
+getPuzzle(3).then(
+  (data) => {
+    console.log(data);
+  },
+  (data) => {
+    console.log(data);
+  }
+);

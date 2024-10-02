@@ -10,8 +10,9 @@
 // let tip20 = tip(0.2);
 // console.log(tip20(100));
 
-let Mypromise = new Promise(() => {
-  reject("user enter two types of words");
+let Mypromise = new Promise((resolve, reject) => {
+  resolve("user enter two types of words");
+  resolve("my words are un matched");
 });
 
 Mypromise.then((data) => {
