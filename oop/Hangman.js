@@ -87,5 +87,3 @@ const displayCountry = (country) => {
 };
 
 getCountry("RW", displayCountry);
-
-getPuzzle();

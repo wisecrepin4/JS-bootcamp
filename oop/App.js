@@ -20,7 +20,7 @@ document.querySelector(".gameHolder").appendChild(nbrGuesses2);
 //console.log(game2.getPuzzle());
 
 window.addEventListener("keypress", (e) => {
-  if ((game1.status = "playing")) {
+  if (game1.status === "playing") {
     let guess = e.key;
     game1.makeGuess(guess);
   }
@@ -43,20 +43,16 @@ window.addEventListener("keypress", (e) => {
   */
 });
 
-getCountry("RW").then(
-  (data) => {
-    console.log(data);
-  },
-  () => {
-    console.log(data);
-  }
-);
+getCountry("RW");
 
-getPuzzle(3).then(
-  (data) => {
-    console.log(data);
-  },
-  (data) => {
-    console.log(data);
-  }
-);
+getPuzzle(3);
+
+//.then(
+//   (data) => {
+//     console.log(data);
+//   },
+//   (data) => {
+//     console.log(data);
+//   }
+// );
+//
