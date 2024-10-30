@@ -56,3 +56,5 @@ getPuzzle(3);
 //   }
 // );
 //
+
+getlocation();
