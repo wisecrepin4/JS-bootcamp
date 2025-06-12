@@ -4,3 +4,5 @@ let convertFahrenheitToCelsius = function (fah){
 }
 console.log( convertFahrenheitToCelsius(32));
 console.log( convertFahrenheitToCelsius(68));
+
+//the conversion of temperature function
