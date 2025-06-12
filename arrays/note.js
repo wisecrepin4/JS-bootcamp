@@ -11,7 +11,7 @@ todos.push("working harder");
 console.log(todos);
 todos.shift("order cat food");
 console.log(todos);
-
 todos.forEach(function (task, index) {
-  console.log(`${index + 1}.${task}`);
+  console.log(`${index + 1}.${task} `);//will return 1.order cat food for the first elemment
+  
 });
